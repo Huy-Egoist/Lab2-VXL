@@ -208,6 +208,10 @@ void display7SEG(int number){
 		  }
 		  setTimer1(50);
 	  }
+	  if(timer2_flag == 1){
+		  HAL_GPIO_TogglePin ( LED_RED_GPIO_Port , LED_RED_Pin ) ;
+		  setTimer2(50);
+	  }
 	  if(counter == 2){
 		  counter = 0;
 	  }
