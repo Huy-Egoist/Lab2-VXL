@@ -190,8 +190,6 @@ int main(void)
                 break;
         }
     }
-  const int MAX_LED = 4;
-  int index_led = 0;
   int led_buffer[4] = {1, 2, 3, 4};
 
   void update7SEG(int index) {
@@ -228,17 +226,15 @@ int main(void)
               break;
       }
   }
-  void updateClockBuffer() {
-      led_buffer[0] = hour / 10;
-      led_buffer[1] = hour % 10;
-      led_buffer[2] = minute / 10;
-      led_buffer[3] = minute % 10;
-  }
     setTimer1(100);
-    setTimer2(100);
-    int counter = 1;
-	HAL_GPIO_WritePin(GPIOA, EN0_Pin, GPIO_PIN_RESET);
+    int counter = 0;
 	int hour = 15 , minute = 8 , second = 50;
+	  void updateClockBuffer() {
+	      led_buffer[0] = hour / 10;
+	      led_buffer[1] = hour % 10;
+	      led_buffer[2] = minute / 10;
+	      led_buffer[3] = minute % 10;
+	  }
     while (1)
     {
     	second ++;
@@ -254,7 +250,17 @@ int main(void)
     		hour = 0;
     	}
     	updateClockBuffer () ;
-    	HAL_Delay(1000);
+    	  if(timer1_flag == 1){
+    		  update7SEG(counter);
+    		  setTimer1(100);
+    	  }
+    	  if(counter == 4){
+    		  counter = 0;
+    	  }
+
+     	  counter ++;
+
+    	HAL_Delay(100);
     }
   /* USER CODE END 3 */
 }
