@@ -201,50 +201,60 @@ int main(void)
   			  HAL_GPIO_WritePin(GPIOA, EN1_Pin, GPIO_PIN_SET);
   			  HAL_GPIO_WritePin(GPIOA, EN2_Pin, GPIO_PIN_SET);
   			  HAL_GPIO_WritePin(GPIOA, EN3_Pin, GPIO_PIN_SET);
+              display7SEG(led_buffer[0]);
               break;
           case 2:
   			  HAL_GPIO_WritePin(GPIOA, EN0_Pin, GPIO_PIN_SET);
   			  HAL_GPIO_WritePin(GPIOA, EN1_Pin, GPIO_PIN_RESET);
   			  HAL_GPIO_WritePin(GPIOA, EN2_Pin, GPIO_PIN_SET);
   			  HAL_GPIO_WritePin(GPIOA, EN3_Pin, GPIO_PIN_SET);
+              display7SEG(led_buffer[1]);
               break;
           case 3:
   			  HAL_GPIO_WritePin(GPIOA, EN0_Pin, GPIO_PIN_SET);
   			  HAL_GPIO_WritePin(GPIOA, EN1_Pin, GPIO_PIN_SET);
   			  HAL_GPIO_WritePin(GPIOA, EN2_Pin, GPIO_PIN_RESET);
   			  HAL_GPIO_WritePin(GPIOA, EN3_Pin, GPIO_PIN_SET);
+              display7SEG(led_buffer[2]);
               break;
           case 4:
   			  HAL_GPIO_WritePin(GPIOA, EN0_Pin, GPIO_PIN_SET);
   			  HAL_GPIO_WritePin(GPIOA, EN1_Pin, GPIO_PIN_SET);
   			  HAL_GPIO_WritePin(GPIOA, EN2_Pin, GPIO_PIN_SET);
   			  HAL_GPIO_WritePin(GPIOA, EN3_Pin, GPIO_PIN_RESET);
+              display7SEG(led_buffer[3]);
               break;
           default:
               break;
       }
   }
-
+  void updateClockBuffer() {
+      led_buffer[0] = hour / 10;
+      led_buffer[1] = hour % 10;
+      led_buffer[2] = minute / 10;
+      led_buffer[3] = minute % 10;
+  }
     setTimer1(100);
     setTimer2(100);
     int counter = 1;
 	HAL_GPIO_WritePin(GPIOA, EN0_Pin, GPIO_PIN_RESET);
+	int hour = 15 , minute = 8 , second = 50;
     while (1)
     {
-  	  if(timer1_flag == 1){
-  		  update7SEG(counter);
-  		  setTimer1(100);
-  	  }
-  	  if(timer2_flag == 1){
-  		  HAL_GPIO_TogglePin ( DOT_GPIO_Port , DOT_Pin ) ;
-  		  setTimer2(100);
-  	  }
-  	  if(counter == 4){
-  		  counter = 0;
-  	  }
-  	  display7SEG(counter);
-   	  counter ++;
-  	  HAL_Delay(1000);
+    	second ++;
+    	if ( second >= 60) {
+    		second = 0;
+    		minute ++;
+    	}
+    	if( minute >= 60) {
+    		minute = 0;
+    		hour ++;
+    	}
+    	if( hour >=24) {
+    		hour = 0;
+    	}
+    	updateClockBuffer () ;
+    	HAL_Delay(1000);
     }
   /* USER CODE END 3 */
 }
