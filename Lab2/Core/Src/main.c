@@ -190,6 +190,7 @@ int main(void)
                 break;
         }
     }
+
   int led_buffer[4] = {1, 2, 3, 4};
 
   void update7SEG(int index) {
@@ -226,24 +227,19 @@ int main(void)
               break;
       }
   }
-    setTimer1(50);
-    setTimer2(50);
+    setTimer1(100);
+    setTimer2(25);
     int counter = 0;
 	int hour = 15 , minute = 8 , second = 50;
-	  void updateClockBuffer() {
+	void updateClockBuffer() {
 	      led_buffer[0] = hour / 10;
 	      led_buffer[1] = hour % 10;
 	      led_buffer[2] = minute / 10;
 	      led_buffer[3] = minute % 10;
-	  }
+	}
     while (1)
     {
-  	  if(timer2_flag == 1){
-  		  HAL_GPIO_TogglePin ( DOT_GPIO_Port , DOT_Pin ) ;
-  		  setTimer2(50);
-  	  }
   	  if(timer1_flag == 1){
-    	second ++;
     	if ( second >= 60) {
     		second = 0;
     		minute ++;
@@ -255,13 +251,18 @@ int main(void)
     	if( hour >=24) {
     		hour = 0;
     	}
-    	updateClockBuffer () ;
-    	update7SEG(counter);
-    	  if(counter == 4){
-    		  counter = 0;
-    	  }
-     	  counter ++;
-     	  setTimer1(50);
+     	updateClockBuffer () ;
+  	   	second ++;
+		HAL_GPIO_TogglePin ( DOT_GPIO_Port , DOT_Pin ) ;
+     	setTimer1(100);
+  	  }
+  	  if(timer2_flag == 1){
+        update7SEG(counter);
+    	if(counter >= 4){
+    		counter = 0;
+    	}
+    	counter ++;
+  		setTimer2(25);
   	  }
     }
 }

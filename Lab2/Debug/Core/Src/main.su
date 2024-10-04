@@ -1,7 +1,7 @@
 main.c:97:8:display7SEG	16	static
 main.c:66:5:main	56	static
-main.c:195:8:update7SEG	24	static
-main.c:233:9:updateClockBuffer	16	static
+main.c:196:8:update7SEG	24	static
+main.c:234:7:updateClockBuffer	16	static
 main.c:269:6:HAL_TIM_PeriodElapsedCallback	16	static
 main.c:277:6:SystemClock_Config	72	static
 main.c:313:13:MX_TIM2_Init	32	static
