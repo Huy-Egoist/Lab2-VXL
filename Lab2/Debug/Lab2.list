@@ -530,8 +530,8 @@ int main(void)
     setTimer1(100);
  800049e:	2064      	movs	r0, #100	; 0x64
  80004a0:	f000 fa92 	bl	80009c8 <setTimer1>
-    setTimer2(25);
- 80004a4:	2019      	movs	r0, #25
+    setTimer2(100);
+ 80004a4:	2064      	movs	r0, #100	; 0x64
  80004a6:	f000 faa3 	bl	80009f0 <setTimer2>
     int counter = 0;
  80004aa:	2300      	movs	r3, #0

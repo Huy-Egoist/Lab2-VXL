@@ -228,7 +228,7 @@ int main(void)
       }
   }
     setTimer1(100);
-    setTimer2(25);
+    setTimer2(100);
     int counter = 0;
 	int hour = 15 , minute = 8 , second = 50;
 	void updateClockBuffer() {
